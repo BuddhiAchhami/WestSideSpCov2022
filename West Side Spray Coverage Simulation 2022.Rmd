@@ -1,0 +1,76 @@
+---
+title: "West Side Spray Coveage Simulation 2022"
+output: html_document
+date: '2023-01-17'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+getwd()
+
+```
+
+```{r}
+library(readxl)
+library(tidyverse)
+library(emmeans)
+library(performance)
+library(xlsx)
+```
+
+```{r}
+#setwd ("C:/Users/bachhami/Box Sync/UCDavis_Buddhi/spraydroplet_analysis/droplet_size_2/WestSideSpCov2022")
+
+westside_spcov2022 <- read_excel("WestSide_image_data.xlsx", sheet = "ForR.WS.SP.2022")
+westside_spcov2022
+```
+
+```{r}
+#summary across applications
+
+summary.percent_coverage <- westside_spcov2022 %>%
+  dplyr::group_by(CardLocation, Plot)%>%
+  dplyr::summarize(PercentCoverageMean = mean (PercentArea),
+            CoverageSD = sd(PercentArea),
+            n1 = n(),
+             CoverageSE =  CoverageSD/sqrt(n1)
+            )
+
+summary.percent_coverage
+
+# summary droplets numbers
+summary.droplets_number <- westside_spcov2022 %>%
+  dplyr::group_by(CardLocation, Plot)%>%
+  dplyr::summarize(DropletCountMean = mean (Count),
+            DropletCountSD = sd(Count),
+            n2 = n(),
+             DropletCountSE =  DropletCountSD/sqrt(n2)
+            )
+
+
+#summary by card location
+
+summary.percent_coverage.cl <- westside_spcov2022 %>%
+  dplyr::group_by(CardLocation)%>%
+  dplyr::summarize(PercentCoverageMean = mean (PercentArea),
+            CoverageSD = sd(PercentArea),
+            n1 = n(),
+             CoverageSE =  CoverageSD/sqrt(n1)
+            )
+
+summary.percent_coverage.cl
+
+# summary droplets numbers
+summary.droplets_number.cl <- westside_spcov2022 %>%
+  dplyr::group_by(CardLocation)%>%
+  dplyr::summarize(DropletCountMean = mean (Count),
+            DropletCountSD = sd(Count),
+            n2 = n(),
+             DropletCountSE =  DropletCountSD/sqrt(n2)
+            )
+summary.droplets_number.cl
+```
+
