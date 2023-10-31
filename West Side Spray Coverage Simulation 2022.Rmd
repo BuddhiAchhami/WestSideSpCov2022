@@ -96,5 +96,15 @@ fx <- function(df, fn){
 fx(westside_spcov2022, mean)
 fx(westside_spcov2022, sd)
 
+
+#Adding more functions for box plot
+
+boxplot_func = function(df, x, y) {
+    boxplot(var1 ~ cat1, data = mydata,
+    main = NA, col = "orangered")
+}
+
+boxplot_func(mydata, "cat1", "var1")
+
 ```
 
