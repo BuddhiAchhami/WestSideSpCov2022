@@ -97,14 +97,26 @@ fx(westside_spcov2022, mean)
 fx(westside_spcov2022, sd)
 
 
-#Adding more functions for box plot
+#Adding more functions to calculate mean, sd, and se
+library(dplyrs)
+library(ggplot2)
 
-boxplot_func = function(df, x, y) {
-    boxplot(var1 ~ cat1, data = mydata,
-    main = NA, col = "orangered")
+calculate_summary <- function (data_frame){
+# Calculate mean, SD, and SE of spray coverage and droplet count by group
+summary_data <- data_frame %>%
+group_by(LeafLocation, Plot) %>%
+summarize (
+mean_spray_coverage = mean(PercentArea),
+SD_spray_coverage = sd (PercentArea),
+SE_spray_coverage = SD_spray_coverage/sqrt (n)),
+mean_droplet_count = mean(Count),
+SD_droplet_count = sd (Count),
+SE_droplet_count = SD_droplet_count/sqrt (n)))
+)%>%
+ungroup()
 }
 
-boxplot_func(mydata, "cat1", "var1")
-
+results <- calculate_summary_data(data_frame)
+print(results)
 ```
 
