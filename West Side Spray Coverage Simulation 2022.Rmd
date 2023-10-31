@@ -97,26 +97,30 @@ fx(westside_spcov2022, mean)
 fx(westside_spcov2022, sd)
 
 
+```
+
+
+```{r}
 #Adding more functions to calculate mean, sd, and se
-library(dplyrs)
-library(ggplot2)
+library(dplyr)
 
-calculate_summary <- function (data_frame){
-# Calculate mean, SD, and SE of spray coverage and droplet count by group
-summary_data <- data_frame %>%
-group_by(LeafLocation, Plot) %>%
-summarize (
-mean_spray_coverage = mean(PercentArea),
-SD_spray_coverage = sd (PercentArea),
-SE_spray_coverage = SD_spray_coverage/sqrt (n)),
-mean_droplet_count = mean(Count),
-SD_droplet_count = sd (Count),
-SE_droplet_count = SD_droplet_count/sqrt (n)))
-)%>%
-ungroup()
-}
+summary_data <- westside_spcov2022 %>%
+  group_by(CardLocation, Plot) %>%
+  summarize(
+    Mean_Spray_Coverage = mean(PercentArea),
+    SD_Spray_Coverage = sd(PercentArea),
+    n1 =n(),
+    SE_Spray_Coverage = SD_Spray_Coverage / sqrt(n()),
+    Mean_Droplet_Count = mean(Count),
+    SD_Droplet_Count = sd(Count),
+    n2 = n(),
+    SE_Droplet_Count = SD_Droplet_Count / sqrt(n()),
+    .groups = "drop"
+  ) 
 
-results <- calculate_summary_data(data_frame)
-print(results)
+# Display the summary data
+print(summary_data)
+
+
 ```
 
