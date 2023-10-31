@@ -124,3 +124,21 @@ print(summary_data)
 
 ```
 
+```{r}
+library(ggplot2)
+library(rlang)
+
+mybarplot <- function(mydf, myxcol, myycol, mytitle){
+  
+  ggplot2::ggplot(data = mydf, aes (x = reorder({{myxcol}},
+      {{myycol}}), y ={{myycol}}))+
+    geom_col (color = "black", fill = "#0072B2")+
+    xlab ("")+
+    ylab ("")+
+    ggtitle(mytitle)
+              
+}
+
+mybarplot(summary_data, CardLocation, Mean_Spray_Coverage, "Spraycoverage")
+```
+
