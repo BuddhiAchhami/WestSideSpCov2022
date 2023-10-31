@@ -14,6 +14,11 @@ getwd()
 ```
 
 ```{r}
+install.packages ("tidyverse")
+```
+
+
+```{r}
 library(readxl)
 library(tidyverse)
 library(emmeans)
@@ -72,5 +77,24 @@ summary.droplets_number.cl <- westside_spcov2022 %>%
              DropletCountSE =  DropletCountSD/sqrt(n2)
             )
 summary.droplets_number.cl
+```
+
+```{r}
+#Adding Function 
+
+library(dplyr)
+
+fx <- function(df, fn){
+  out <- df %>% 
+          group_by(CardLocation, Plot) %>% 
+          summarise(mean_area = fn(PercentArea))
+  return(out)
+}
+
+
+
+fx(westside_spcov2022, mean)
+fx(westside_spcov2022, sd)
+
 ```
 
